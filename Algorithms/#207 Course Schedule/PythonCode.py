@@ -21,6 +21,55 @@ There are a total of 2 courses to take. To take course 1 you should have finishe
         :type prerequisites: List[List[int]]
         :rtype: bool
         """
+        # nonrecursive solution
+        Visited = list([0]*numCourses)
+        edges = list(prerequisites)
+        for curnode in xrange(numCourses):
+            if Visited[curnode]:
+                continue
+            Marked = list([0]*numCourses)
+            #print edges
+            Loop = self.DFS(numCourses,edges,curnode,Visited)
+            if Loop == False:
+                return False
+        return True
+    def DFS(self,numNodes,edges,curnode,Visited):
+        
+        #Visited = list([0]*numNodes) # nodes visited before
+        Marked = list([0]*numNodes) # nodes in the stack
+        S = [curnode]
+        while len(S) > 0:
+            v = S[-1]
+            hasnodescendent = True
+            for edge in edges:
+                if edge[0] == v:
+                    nextnode = edge[1]
+                    if Marked[nextnode]:
+                        return False, Visited
+                    else:
+                        if not Visited[nextnode]:
+                            S.append(nextnode)
+                            Marked[nextnode] = 1
+                            hasnodescendent = False
+            
+            if hasnodescendent:
+                S.pop()
+                Marked[v] = 0
+                Visited[v] = 1
+                for node in S:
+                    try:
+                        edges.remove([node,v])
+                    except:
+                        pass
+                
+                
+        return True,Visited
+        
+        
+        
+        """
+    # recursive solution 
+    def canFinish(self, numCourses, prerequisites):
         Visited = list([0]*numCourses)
         edges = list(prerequisites)
         for curnode in xrange(numCourses):
@@ -53,4 +102,11 @@ There are a total of 2 courses to take. To take course 1 you should have finishe
                     Marked[nextNode] = 0
         
         return True, Visited, Marked
+        """
+
+
+    
         
+        
+        
+            
