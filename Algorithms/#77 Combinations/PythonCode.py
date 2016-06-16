@@ -22,8 +22,30 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         
-        ### recursive solution        
+        ### nonrecursive solution
+        Stack = [1]
+        combs = []
+        while 1:
+            if len(Stack) == k:
+                combs.append(list(Stack))
+                temp = Stack.pop()
+
+                while len(Stack) > 0 and (temp == n-(k-len(Stack)-1) or n-temp < k-len(Stack)):
+                    temp = Stack.pop()
+                if n-temp >= k - len(Stack):
+                    Stack.append(temp+1)
+            else:
+                temp = Stack[-1]
+                if n-temp >= k - len(Stack):
+                    Stack.append(temp+1)
+                else:
+                    Stack.pop()
+            if len(Stack) == 0:
+                break
+        return combs
         
+        ### recursive solution  1      
+"""
         nums = [i for i in range(1,n+1)]
         return self.comb_constant_len(nums,k)
         #return Subsets
@@ -44,5 +66,5 @@ class Solution(object):
         else:
             List = []
         return List1 + List2
-        
+"""
         
