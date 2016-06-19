@@ -14,8 +14,48 @@ class Solution(object):
         :rtype: TreeNode
         """
         
+        # non recursive solution 
+        if len(preorder) == 0:
+            return None
+        rootval = preorder[0]
+        Root = TreeNode(rootval)
+        curnode = Root
+        nodeStack = [Root]
+        valStack = [rootval]
+        for val in preorder[1:]:
+            curnode = nodeStack[-1]
+            curval = valStack[-1]
+            newnode = TreeNode(val)
+            if inorder.index(val) < inorder.index(curval):
+                curnode.left = newnode
+                nodeStack.append(newnode)
+                valStack.append(val)
+            else:
+                while 1:
+                    Flag = True
+                    for tempval in inorder[inorder.index(curval)+1:inorder.index(val)]:
+                        if tempval in valStack:
+                            Flag = False
+                            break
+                    if not Flag:
+                        nodeStack.pop()
+                        valStack.pop()
+                        curnode = nodeStack[-1]
+                        curval = valStack[-1]
+                    else:
+                        curnode = nodeStack[-1]
+                        curval = valStack[-1]
+                curnode.right = newnode
+                nodeStack.append(newnode)
+                valStack.append(val)
+        return Root   
+        
+        
+        """
         # a reucrsive soltuion using another function to save memory
-        return self.recursive(preorder,inorder,0,len(preorder)-1,0,len(inorder)-1)
+        # return self.recursive(preorder,inorder,0,len(preorder)-1,0,len(inorder)-1)
+        """
+        
         
         """
         # another recursive solution but exceeding memory limit 
