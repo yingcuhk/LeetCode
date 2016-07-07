@@ -41,9 +41,9 @@ class Solution(object):
             return []
         if k == 1 and nums[0] == n:
             return [[nums[0]]]
-        List1 = self.recursiveSolution(nums[1:],k,n)
+        List1 = self.recursiveSolution(nums[1:],k,n) # do not select the first
         
-        shortList2 = self.recursiveSolution(nums[1:],k-1,n-nums[0])
+        shortList2 = self.recursiveSolution(nums[1:],k-1,n-nums[0]) # select the first 
         
         List2 = []
         for shortl in shortList2:
