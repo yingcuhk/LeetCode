@@ -19,7 +19,7 @@ class Solution(object):
         profit2T[1] = max(profit1T[:2])
         temp = -1*prices[0]
         for k in range(2,L):
-            temp = max(temp,profit1T[k-2] -prices[k-1])
+            temp = max(temp,profit1T[k-2] -prices[k-1]) # see the explanation for the derivation
             profit2T[k] = max(profit2T[k-1],profit1T[k], prices[k] + temp)
             
             
